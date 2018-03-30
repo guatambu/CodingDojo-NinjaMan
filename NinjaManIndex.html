@@ -22,6 +22,8 @@
 			width: 40px;
 			display: inline-block;
 			background-image: url('sushi.png');
+			background-repeat: no-repeat; 
+			background-position: 50% 50%; 
 		}
 		.onigiri {
 			background-color: black;
@@ -29,6 +31,8 @@
 			width: 40px;
 			display: inline-block;
 			background-image: url('onigiri.png');
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
 		}
 		.blank {
 			background-color: black;
@@ -68,23 +72,17 @@
 
 	];
 	*/
-	
 
 	var worldDict = {
-		0: 'blank',
+		0: 'onigiri',
 		1: 'wall',
 		2: 'sushi',
-		3: 'onigiri'
+		3: 'blank'
 	}
 
 	function drawWorld(){
+
 		var world = createRandomWorld();
-		console.log(world.length);
-		console.log(world);
-		console.log("first item in macro array: "+world[0]);
-		console.log("first item in nested item: "+world[0][0]);
-		console.log("nested arrays length: " + world[0].length);
-		//console.log(world[0][0][1]);
 
 		output = "";
 
@@ -148,21 +146,11 @@
 
 	}
 	
-	function randomNumberBetween0and3(){
-		var random = Math.floor(Math.random() * 4);
+	function randomNumberBetween0and2(){
+		var random = Math.floor(Math.random() * 3);
 		return random
 	}
 
-	/*
-	function createRandomArray(){
-		var randomArray = [];
-		for(i = 0; i < 16; i++){
-			var int = randomNumberBetween0and3();
-			randomArray.push(int);
-		}
-		return randomArray
-	}
-	*/
 	function createRandomWorld(){
 		//var randomArray = createRandomArray();
 		//var length = randomArray.length;
@@ -170,12 +158,10 @@
 		for(i = 0; i < 16; i++){
 			randomWorld.push([]);
 			for(x = 0; x < 16; x++){
-			var int = randomNumberBetween0and3();
+			var int = randomNumberBetween0and2();
 			randomWorld[i].push(int);
 			}
 		}
-		
-		
 		
 		return randomWorld
 	}
@@ -183,7 +169,7 @@
 	// keep score of how many ninjaman eats 
 	// sushi = 10 pts & onigiri = 5 pts
 
-	// create random world
+	// create random world  ---   DONE!!!
 
 	// create ghosts that chase ninjaman
 
