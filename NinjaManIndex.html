@@ -54,6 +54,7 @@
 	<div id='ninjaman'></div>
 </body>
 <script type="text/javascript">
+	/*
 	var world = [
 		[1,1,1,1,1,1,1,1,1],
 		[1,2,2,1,2,2,2,1,1],
@@ -66,6 +67,8 @@
 		[1,1,1,1,1,1,1,1,1],
 
 	];
+	*/
+	
 
 	var worldDict = {
 		0: 'blank',
@@ -75,14 +78,23 @@
 	}
 
 	function drawWorld(){
+		var world = createRandomWorld();
+		console.log(world.length);
+		console.log(world);
+		console.log("first item in macro array: "+world[0]);
+		console.log("first item in nested item: "+world[0][0]);
+		console.log("nested arrays length: " + world[0].length);
+		//console.log(world[0][0][1]);
+
 		output = "";
 
 		for(var row = 0; row < world.length; row++){
 			output += "<div	class = 'row'>"
-			for (var x = 0 ; x < world[row].length; x++) {
+			for (var x = 0 ; x < world.length; x++) {
 				output += "<div	class = '" + worldDict[world[row][x]] +"'></div>"
 			}
 			output += "</div>"
+			
 		}
 
 		document.getElementById('world').innerHTML = output;
@@ -135,7 +147,39 @@
 		drawWorld()
 
 	}
+	
+	function randomNumberBetween0and3(){
+		var random = Math.floor(Math.random() * 4);
+		return random
+	}
 
+	/*
+	function createRandomArray(){
+		var randomArray = [];
+		for(i = 0; i < 16; i++){
+			var int = randomNumberBetween0and3();
+			randomArray.push(int);
+		}
+		return randomArray
+	}
+	*/
+	function createRandomWorld(){
+		//var randomArray = createRandomArray();
+		//var length = randomArray.length;
+		var randomWorld = [];
+		for(i = 0; i < 16; i++){
+			randomWorld.push([]);
+			for(x = 0; x < 16; x++){
+			var int = randomNumberBetween0and3();
+			randomWorld[i].push(int);
+			}
+		}
+		
+		
+		
+		return randomWorld
+	}
+	
 	// keep score of how many ninjaman eats 
 	// sushi = 10 pts & onigiri = 5 pts
 
