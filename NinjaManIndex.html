@@ -58,20 +58,6 @@
 	<div id='ninjaman'></div>
 </body>
 <script type="text/javascript">
-	/*
-	var world = [
-		[1,1,1,1,1,1,1,1,1],
-		[1,2,2,1,2,2,2,1,1],
-		[1,1,3,1,2,1,2,1,1],
-		[1,2,2,2,2,3,2,2,1],
-		[1,2,1,1,2,1,1,2,1],
-		[1,2,2,2,2,2,2,2,1],
-		[1,2,1,3,1,1,2,1,1],
-		[1,2,2,2,2,2,3,1,1],
-		[1,1,1,1,1,1,1,1,1],
-
-	];
-	*/
 
 	var worldDict = {
 		0: 'onigiri',
@@ -80,9 +66,27 @@
 		3: 'blank'
 	}
 
-	function drawWorld(){
+	function randomNumberBetween0and2(){
+		var random = Math.floor(Math.random() * 3);
+		return random
+	}
 
-		var world = createRandomWorld();
+	function createRandomWorld(){
+		var randomWorld = [];
+		for(i = 0; i < 16; i++){
+			randomWorld.push([]);
+			for(x = 0; x < 16; x++){
+			var int = randomNumberBetween0and2();
+			randomWorld[i].push(int);
+			}
+		}
+		
+		return randomWorld
+	}
+
+	var world = createRandomWorld();
+
+	function drawWorld(){
 
 		output = "";
 
@@ -115,56 +119,77 @@
 	}
 
 	drawNinjaman()
-
+	
 	document.onkeydown = function(e){
-		if(e.keyCode == 37){
-			if(world[ninjaman.y][ninjaman.x - 1] != 1){
+		// LEFT
+		if(e.keyCode == 37){  
+			if((world[ninjaman.y][ninjaman.x - 1] != 1) && (world[ninjaman.y][ninjaman.x - 1] == 0)){
+				ninjaman.x--;
+				score += onigiriscore;
+				
+			} else if ((world[ninjaman.y][ninjaman.x - 1] != 1) && (world[ninjaman.y][ninjaman.x - 1] == 2)) {
+				ninjaman.x--;
+				score += sushiscore;
+				
+			} else if (world[ninjaman.y][ninjaman.x - 1] != 1) {
 				ninjaman.x--;
 			}
+			//console.log("LEFT keycode: "+e.keyCode)
 		}
-		if(e.keyCode == 38){
-			if(world[ninjaman.y - 1][ninjaman.x] != 1){
-				ninjaman.y--;
-			}
-		}
+		// RIGHT
 		if(e.keyCode == 39){
-			if(world[ninjaman.y][ninjaman.x + 1] != 1){
+			if((world[ninjaman.y][ninjaman.x + 1] != 1) && (world[ninjaman.y][ninjaman.x + 1] == 0)){
+				ninjaman.x++;
+				score += onigiriscore;
+				
+			} else if((world[ninjaman.y][ninjaman.x + 1] != 1) && (world[ninjaman.y][ninjaman.x + 1] == 2)){
+				ninjaman.x++;
+				score += sushiscore;
+			}
+			else if(world[ninjaman.y][ninjaman.x + 1] != 1) {
 				ninjaman.x++;
 			}
+			//console.log("RIGHT keycode: "+e.keyCode)
+		} 
+		// UP
+		if(e.keyCode == 38){
+			if((world[ninjaman.y - 1][ninjaman.x] != 1) && (world[ninjaman.y - 1][ninjaman.x] == 0)){
+				ninjaman.y--;
+				score += onigiriscore;
+				
+			} else if((world[ninjaman.y - 1][ninjaman.x] != 1) && (world[ninjaman.y - 1][ninjaman.x] == 2)) {
+				ninjaman.y--;
+				score += sushiscore;
+			} else if(world[ninjaman.y - 1][ninjaman.x] != 1) {
+				ninjaman.y--;
+			}
+			//console.log("UP keycode: "+e.keyCode)
 		}
+		// DOWN
 		if(e.keyCode == 40){
-			if(world[ninjaman.y + 1][ninjaman.x] != 1){
+			if((world[ninjaman.y + 1][ninjaman.x] != 1) && (world[ninjaman.y + 1][ninjaman.x] == 0)){
+				ninjaman.y++;
+				score += onigiriscore;
+				
+			} else if((world[ninjaman.y + 1][ninjaman.x] != 1) && (world[ninjaman.y + 1][ninjaman.x] == 2)){
+				ninjaman.y++;
+				score += sushiscore;
+				
+			} else if(world[ninjaman.y + 1][ninjaman.x] != 1){
 				ninjaman.y++;
 			}
-
+			//console.log("DOWN keycode: "+e.keyCode)
 		}
 
-		world[ninjaman.y][ninjaman.x] = 0;
+		world[ninjaman.y][ninjaman.x] = 3;
 
 		drawNinjaman()
+		console.log("score: " + score)
 		drawWorld()
-
 	}
 	
-	function randomNumberBetween0and2(){
-		var random = Math.floor(Math.random() * 3);
-		return random
-	}
 
-	function createRandomWorld(){
-		//var randomArray = createRandomArray();
-		//var length = randomArray.length;
-		var randomWorld = [];
-		for(i = 0; i < 16; i++){
-			randomWorld.push([]);
-			for(x = 0; x < 16; x++){
-			var int = randomNumberBetween0and2();
-			randomWorld[i].push(int);
-			}
-		}
-		
-		return randomWorld
-	}
+	
 	
 	// keep score of how many ninjaman eats 
 	// sushi = 10 pts & onigiri = 5 pts
